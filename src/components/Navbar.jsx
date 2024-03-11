@@ -1,12 +1,34 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useLocation  } from "react-router-dom";
 import "../App.css";
+import { useContext } from "react";
+import Context from "./context/Context";
+import { useEffect } from "react";
 export const Navbar = (props) => {
-  const handleclick = (e) => {
-    //console.log(e.target.innerText)
-    
-    props.func(e.target.innerText);
-  };
+  const {setHeading}=useContext(Context);
+  const location = useLocation();
+  useEffect(() => {
+    // Extract the pathname from the location object
+    const pathname = location.pathname;
+
+    // Update the heading based on the pathname
+    switch (pathname) {
+      case "/":
+        setHeading("About");
+        break;
+      case "/resume":
+        setHeading("Resume");
+        break;
+      case "/projects":
+        setHeading("Projects");
+        break;
+      case "/contact":
+        setHeading("Contact");
+        break;
+      default:
+        setHeading("");
+    }
+  }, [location.pathname, setHeading]);
   return (
     <nav>
       <div className="bottom-left-border w-fit flex gap-10 bg-zinc-500 text-white justify-end border-b border-l font-bold  text-2xl  px-5 py-3">
@@ -15,7 +37,7 @@ export const Navbar = (props) => {
           className={({ isActive }) =>
             `${isActive ? "text-orange-200 underline underline-offset-4" : " "}`
           }
-          onClick={handleclick}
+          
         >
           About
         </NavLink>
@@ -25,7 +47,7 @@ export const Navbar = (props) => {
           className={({ isActive }) =>
             `${isActive ? "text-orange-200 underline underline-offset-4" : " "}`
           }
-          onClick={handleclick}
+          
         >
           Resume
         </NavLink>
@@ -35,7 +57,7 @@ export const Navbar = (props) => {
           className={({ isActive }) =>
             `${isActive ? "text-orange-200 underline underline-offset-4" : " "}`
           }
-          onClick={handleclick}
+         
         >
           Projects
         </NavLink>
@@ -45,7 +67,7 @@ export const Navbar = (props) => {
           className={({ isActive }) =>
             `${isActive ? "text-orange-200 underline underline-offset-4" : " "}`
           }
-          onClick={handleclick}
+          
         >
           Contact
         </NavLink>
